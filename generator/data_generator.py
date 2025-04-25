@@ -133,7 +133,7 @@ def generate_name(gender):
     return f"{first_name} {last_name}"
 
 def generate_age():
-    return int(np.clip(np.round(np.random.normal(loc=30, scale=10), 0), 18, 60))
+    return int(np.clip(np.round(np.random.normal(loc=30, scale=5), 0), 18, 60))
 
 def generate_region():
     probabilities = [0.30, 0.25, 0.25, 0.20]
@@ -150,8 +150,8 @@ def generate_quantity_sold():
     quantities_sold = np.arange(1, 11)  
 
     probabilities = np.zeros(len(quantities_sold)) 
-    probabilities[0:2] = 0.6 
-    probabilities[2:6] = 0.3 
+    probabilities[0:2] = 0.7 
+    probabilities[2:6] = 0.2 
     probabilities[6:] = 0.1
     probabilities /= np.sum(probabilities)
 
@@ -164,8 +164,8 @@ def generate_rating():
     ratings = np.arange(1, 6)  
 
     probabilities = np.zeros(len(ratings)) 
-    probabilities[0:2] = 0.4 
-    probabilities[2:] = 0.6 
+    probabilities[0:3] = 0.25 
+    probabilities[3:] = 0.75 
     probabilities /= np.sum(probabilities)
 
     return np.random.choice(ratings, p=probabilities)
@@ -174,7 +174,7 @@ def generate_channel():
     return str(np.random.choice(constants.CHANNELS))
 
 def generate_payment_method():
-    probabilities = [0.10, 0.40, 0.20, 0.15, 0.05, 0.05, 0.03, 0.02]
+    probabilities = [0.10, 0.30, 0.20, 0.20, 0.15, 0.05]
     return str(np.random.choice(constants.PAYMENT_METHODS, p=probabilities))
 
 def generate_shipping_method():

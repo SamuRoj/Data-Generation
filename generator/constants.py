@@ -53,12 +53,10 @@ GENDER = ["Male", "Female"]
 CHANNELS = ['Store', 'Online', 'Supplier']
 PAYMENT_METHODS = [
     'Cash', 
-    'Card', 
+    'Credit Card', 
     'Paypal', 
     'Debit Card', 
-    'Bank Transfer', 
     'Apple Pay / Google Pay', 
-    'Financing', 
     'Cash on Delivery'
 ]
 SHIPPING_METHODS = [

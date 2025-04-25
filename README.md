@@ -37,37 +37,39 @@ Follow these steps to set up the development environment:
 ## Dataset Explanation
 
 | Column Name              | Description                                                                 | Example                          |
+| Column Name              | Description                                                                 | Data Type                       |
 |--------------------------|-----------------------------------------------------------------------------|----------------------------------|
-| **Sale Id**              | Unique identifier for each sale.                                           |                                  |
-| **Product Code**         | Code representing the specific product.                                    |                                  |
-| **Category**             | Category of the product (e.g., Laptop, Mobile).                           |                                  |
-| **Tier**                 | Product tier (e.g., Premium, Budget).                                      |                                  |
-| **Brand**                | Brand name of the product.                                                 |                                  |
-| **Price (USD)**          | Price of the product in USD.                                               |                                  |
-| **Inward Date**          | Date when the product was added to inventory.                              |                                  |
-| **Dispatch Date**        | Date when the product was dispatched to the customer.                      |                                  |
-| **Core Specification**   | Details about the product's core specifications.                          |                                  |
-| **RAM**                  | Amount of RAM in the product (e.g., 8GB, 16GB).                            |                                  |
-| **Storage (GB)**         | Storage capacity of the product in gigabytes.                              |                                  |
-| **Battery (mAh)**        | Battery capacity of the product in milliampere-hours.                      |                                  |
-| **Processor Specification** | Details about the processor used in the product.                        |                                  |
-| **Screen Size**          | Size of the product's screen in inches.                                    |                                  |
-| **Operating System**     | Operating system installed on the
-| **Customer Name**        | Name of the customer who purchased the product.                           |                       |
-| **Customer Age**         | Age of the customer.                                                       |                             |
-| **Customer Region**      | Region where the customer resides.                                         |                   |
-| **Customer Location**    | Specific location of the customer.                                         |               |
-| **Customer Gender**      | Gender of the customer.                                                    |                           |
-| **Customer Email**       | Email address of the customer.                                             |            |
-| **Quantity Sold**        | Number of units sold in the transaction.                                   |                         |
-| **Warranty Years**       | Warranty period provided for the product in years.                        |                             |
-| **Rating**               | Customer rating for the product (e.g., 1-5 stars).                        |                            |
-| **Channel**              | Sales channel used (e.g., Online, Retail).                                |                       |
-| **Payment Method**       | Payment method used by the customer (e.g., Credit Card, PayPal).           |                   |
-| **Shipping Method**      | Shipping method used for delivery (e.g., Standard, Express).               |                        |
-| **Has 5G**               | Indicates if the product supports 5G connectivity (Yes/No).               |                            |
-| **Has Touchscreen**      | Indicates if the product has a touchscreen feature (Yes/No).               |                            |
-| **Currency**             | Currency used for the transaction.                                         |                           |
+| **Sale Id**              | Unique identifier for each sale.                                           | String                          |
+| **Product Code**         | Code representing the specific product.                                    | String                          |
+| **Category**             | Category of the product (e.g., Laptop, Mobile).                           | String                          |
+| **Tier**                 | Product tier (e.g., Low, Mid, High).                                      | String                          |
+| **Brand**                | Brand name of the product.                                                 | String                          |
+| **Price (USD)**          | Price of the product in USD.                                               | Float                           |
+| **Inward Date**          | Date when the product was added to inventory.                              | Date                            |
+| **Dispatch Date**        | Date when the product was dispatched to the customer.                      | Date                            |
+| **Core Specification**   | Details about the product's core specifications.                          | String                          |
+| **RAM**                  | Amount of RAM in the product (e.g., 8GB, 16GB).                            | String                          |
+| **Storage (GB)**         | Storage capacity of the product in gigabytes.                              | Integer                         |
+| **Battery (mAh)**        | Battery capacity of the product in milliampere-hours.                      | Integer                         |
+| **Processor Specification** | Details about the processor used in the product.                        | String                          |
+| **Screen Size**          | Size of the product's screen in inches.                                    | Float                           |
+| **Operating System**     | Operating system installed on the product.                                 | String                          |
+| **Customer Name**        | Name of the customer who purchased the product.                           | String                          |
+| **Customer Age**         | Age of the customer.                                                       | Integer                         |
+| **Customer Region**      | Region where the customer resides.                                         | String                          |
+| **Customer Location**    | Specific location of the customer.                                         | String                          |
+| **Customer Gender**      | Gender of the customer.                                                    | String                          |
+| **Customer Email**       | Email address of the customer.                                             | String                          |
+| **Quantity Sold**        | Number of units sold in the transaction.                                   | Integer                         |
+| **Warranty Years**       | Warranty period provided for the product in years.                        | Integer                         |
+| **Rating**               | Customer rating for the product (e.g., 1-5 stars).                        | Float                           |
+| **Channel**              | Sales channel used (e.g., Online, Store).                                | String                          |
+| **Payment Method**       | Payment method used by the customer (e.g., Credit Card, PayPal).           | String                          |
+| **Shipping Method**      | Shipping method used for delivery (e.g., Standard, Express).               | String                          |
+| **Has 5G**               | Indicates if the product supports 5G connectivity (Yes/No).               | Boolean                         |
+| **Has Touchscreen**      | Indicates if the product has a touchscreen feature (Yes/No).               | Boolean                         |
+| **Currency**             | Currency used for the transaction.                                         | String                          |
+
 
 ## Running the tests
 
