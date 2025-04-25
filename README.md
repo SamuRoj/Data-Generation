@@ -18,7 +18,7 @@ Follow these steps to set up the development environment:
 
 1. Clone the repository:  
     ```bash
-    git clone https://github.com/your-username/data-generator.git
+    git clone https://github.com/SamuRoj/Data-Generation
     cd data-generator
     ```
 
@@ -32,11 +32,11 @@ Follow these steps to set up the development environment:
 3. Run the application:  
     ```bash
     python main.py
+    python graphics.py
     ```
 
 ## Dataset Explanation
 
-| Column Name              | Description                                                                 | Example                          |
 | Column Name              | Description                                                                 | Data Type                       |
 |--------------------------|-----------------------------------------------------------------------------|----------------------------------|
 | **Sale Id**              | Unique identifier for each sale.                                           | String                          |
@@ -62,7 +62,7 @@ Follow these steps to set up the development environment:
 | **Customer Email**       | Email address of the customer.                                             | String                          |
 | **Quantity Sold**        | Number of units sold in the transaction.                                   | Integer                         |
 | **Warranty Years**       | Warranty period provided for the product in years.                        | Integer                         |
-| **Rating**               | Customer rating for the product (e.g., 1-5 stars).                        | Float                           |
+| **Rating**               | Customer rating for the product (e.g., 1-5 stars).                        | Integer                           |
 | **Channel**              | Sales channel used (e.g., Online, Store).                                | String                          |
 | **Payment Method**       | Payment method used by the customer (e.g., Credit Card, PayPal).           | String                          |
 | **Shipping Method**      | Shipping method used for delivery (e.g., Standard, Express).               | String                          |
