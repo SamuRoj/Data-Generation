@@ -14,7 +14,7 @@ class DataGeneratorTest(unittest.TestCase):
         self.assertTrue(N == len(data))
 
     def test_generator_product_code(self):
-        N = 8
+        N = 12
         code = data_generator.generate_product_code()
         self.assertTrue(N == len(code))
         self.assertTrue(code.isascii())
@@ -50,7 +50,7 @@ class DataGeneratorTest(unittest.TestCase):
         inward_date = data_generator.generate_inward_date()
         today = datetime.today().date()
         self.assertGreaterEqual(today - inward_date, timedelta(days=10))
-        self.assertLessEqual(today - inward_date, timedelta(days=365))
+        self.assertLessEqual(today - inward_date, timedelta(days=7300))
 
     def test_generator_dispatch_date(self):
         inward_date = data_generator.generate_inward_date()
@@ -62,65 +62,80 @@ class DataGeneratorTest(unittest.TestCase):
     def test_generator_core_specification(self):
         category = ["Mobile", "Laptop"]
         tier = ["Low", "Mid", "High"]
+        date = fake.date_between(start_date="-7300d", end_date="-10d")
+        years = sorted(constants.CORE_SPECIFICATION.keys())
+        year = date.year
+        key = max([a for a in years if a <= year])
         for i in category:
             for j in range(len(tier)):
-                core_specification = data_generator.generate_core_specification(i, tier[j])
+                core_specification = data_generator.generate_core_specification(i, tier[j], date)
                 if i == "Mobile":
                     self.assertTrue(core_specification == "N/A")
-                elif j != 2:
-                    self.assertTrue(core_specification in constants.CORE_SPECIFICATION[j * 2: (j * 2) + 2])
                 else:
-                    self.assertTrue(core_specification in constants.CORE_SPECIFICATION[j * 2:])
+                    self.assertTrue(core_specification in constants.CORE_SPECIFICATION[key][j * 2: (j + 1) * 2])
 
     def test_generator_ram(self):
-        ram = data_generator.generate_ram("Mobile", "Low")
-        self.assertTrue(ram in constants.MOBILE_RAM[0:2])
-        ram = data_generator.generate_ram("Mobile", "Mid")
-        self.assertTrue(ram in constants.MOBILE_RAM[2:])
-
-        ram = data_generator.generate_ram("Laptop", "Low")
-        self.assertTrue(ram in constants.PC_RAM[0:2])
-        ram = data_generator.generate_ram("Laptop", "Mid")
-        self.assertTrue(ram in constants.PC_RAM[2:])
+        categories = ["Mobile", "Laptop"]
+        tiers = ["Low", "Mid", "High"]
+        date = fake.date_between(start_date="-7300d", end_date="-10d")
+        for category in categories:
+            for tier in tiers:
+                ram = data_generator.generate_ram(category, tier, date)
+                self.assertTrue(ram % 2 == 0)
+                if category == "Mobile":
+                    self.assertGreaterEqual(ram, 128)
+                    self.assertLessEqual(ram, 12288)
+                else:
+                    self.assertGreaterEqual(ram, 128)
+                    self.assertLessEqual(ram, 65536)
 
     def test_generator_storage(self):
         category = ["Mobile", "Laptop"]
         tier = ["Low", "Mid", "High"]
+        date = fake.date_between(start_date="-7300d", end_date="-10d")
         for i in category:
             for j in range(len(tier)):
-                storage = data_generator.generate_storage(i, tier[j])
-                if i == "Mobile":
-                    self.assertTrue(storage in constants.MOBILE_STORAGE[j * 2: (j * 2) + 2])
+                storage = data_generator.generate_storage(i, tier[j], date)
+                self.assertTrue(storage % 2 == 0)
+                if i == "Mobile": 
+                    self.assertGreaterEqual(storage, 2000)
+                    self.assertLessEqual(storage, 1024000)
                 else:
-                    self.assertTrue(storage in constants.PC_STORAGE[j * 2: (j * 2) + 2])
+                    self.assertGreaterEqual(storage, 8000)
+                    self.assertLessEqual(storage, 4096000)
 
     def test_generator_battery(self):
         category = ["Mobile", "Laptop"]
         tier = ["Low", "Mid", "High"]
+        date = fake.date_between(start_date="-7300d", end_date="-10d")
         for i in category:
             for j in range(len(tier)):
-                battery = data_generator.generate_battery(i, tier[j])
+                battery = data_generator.generate_battery(i, tier[j], date)
                 if i == "Mobile":
-                    self.assertTrue(battery in constants.MOBILE_BATTERY[j * 2: (j * 2) + 2])
+                    self.assertGreaterEqual(battery, 186)
+                    self.assertLessEqual(battery, 7000)
                 else:
-                    self.assertTrue(battery in constants.PC_BATTERY[j * 2: (j * 2) + 2])
+                    self.assertGreaterEqual(battery, 250)
+                    self.assertLessEqual(battery, 9000)
 
     def test_generator_processor_specification(self):
         processor_specification = data_generator.generate_processor_specification("Laptop", 
                                                                                   "Samsung",
+                                                                                  "",
                                                                                   "Intel i3")
         self.assertTrue(processor_specification == "Intel i3")
+        date = fake.date_between(start_date='-7300d', end_date='-10d')
 
         for brand in constants.MOBILE_BRANDS:
-            processor_specification = data_generator.generate_processor_specification("Mobile", brand)
+            processor = str(data_generator.generate_processor_specification("Mobile", brand, date))
             if brand == "Apple":
-                self.assertTrue(processor_specification == "Apple A-Series")
+                self.assertTrue(processor.startswith("Apple"))
             elif brand == "Samsung":
-                self.assertTrue(processor_specification == "Samsung Exynos")
+                self.assertTrue(processor.startswith("Samsung") or processor.startswith("Exynos"))
             elif brand == "Xiaomi" or brand == "OnePlus" or brand == "Realme":
-                self.assertTrue(processor_specification == "Mediatek Dimensity")
+                self.assertTrue(processor.startswith("MediaTek"))
             else:
-                self.assertTrue(processor_specification in constants.PROCESSOR_SPECIFICATION)
+                self.assertTrue(processor.startswith("Qualcomm"))
 
     def test_generator_screen_size(self):
         screen_size = data_generator.generate_screen_size("Mobile")

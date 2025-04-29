@@ -37,39 +37,38 @@ Follow these steps to set up the development environment:
 
 ## Dataset Explanation
 
-| Column Name              | Description                                                                 | Data Type                       |
-|--------------------------|-----------------------------------------------------------------------------|----------------------------------|
-| **Sale Id**              | Unique identifier for each sale.                                           | String                          |
-| **Product Code**         | Code representing the specific product.                                    | String                          |
-| **Category**             | Category of the product (e.g., Laptop, Mobile).                           | String                          |
-| **Tier**                 | Product tier (e.g., Low, Mid, High).                                      | String                          |
-| **Brand**                | Brand name of the product.                                                 | String                          |
-| **Price (USD)**          | Price of the product in USD.                                               | Float                           |
-| **Inward Date**          | Date when the product was added to inventory.                              | Date                            |
-| **Dispatch Date**        | Date when the product was dispatched to the customer.                      | Date                            |
-| **Core Specification**   | Details about the product's core specifications.                          | String                          |
-| **RAM**                  | Amount of RAM in the product (e.g., 8GB, 16GB).                            | String                          |
-| **Storage (GB)**         | Storage capacity of the product in gigabytes.                              | Integer                         |
-| **Battery (mAh)**        | Battery capacity of the product in milliampere-hours.                      | Integer                         |
-| **Processor Specification** | Details about the processor used in the product.                        | String                          |
-| **Screen Size**          | Size of the product's screen in inches.                                    | Float                           |
-| **Operating System**     | Operating system installed on the product.                                 | String                          |
-| **Customer Name**        | Name of the customer who purchased the product.                           | String                          |
-| **Customer Age**         | Age of the customer.                                                       | Integer                         |
-| **Customer Region**      | Region where the customer resides.                                         | String                          |
-| **Customer Location**    | Specific location of the customer.                                         | String                          |
-| **Customer Gender**      | Gender of the customer.                                                    | String                          |
-| **Customer Email**       | Email address of the customer.                                             | String                          |
-| **Quantity Sold**        | Number of units sold in the transaction.                                   | Integer                         |
-| **Warranty Years**       | Warranty period provided for the product in years.                        | Integer                         |
-| **Rating**               | Customer rating for the product (e.g., 1-5 stars).                        | Integer                           |
-| **Channel**              | Sales channel used (e.g., Online, Store).                                | String                          |
-| **Payment Method**       | Payment method used by the customer (e.g., Credit Card, PayPal).           | String                          |
-| **Shipping Method**      | Shipping method used for delivery (e.g., Standard, Express).               | String                          |
-| **Has 5G**               | Indicates if the product supports 5G connectivity (Yes/No).               | Boolean                         |
-| **Has Touchscreen**      | Indicates if the product has a touchscreen feature (Yes/No).               | Boolean                         |
-| **Currency**             | Currency used for the transaction.                                         | String                          |
-
+| Column Name              | Description                                                                 | Data Type                       | Statistical Distribution       | Dependency                     |
+|--------------------------|-----------------------------------------------------------------------------|----------------------------------|--------------------------------|--------------------------------|
+| **Sale Id**              | Unique identifier for each sale.                                           | String                          | Uniform                       | None                           |
+| **Product Code**         | Code representing the specific product.                                    | String                          | Uniform                       | None                           |
+| **Category**             | Category of the product (e.g., Laptop, Mobile).                           | String                          | Categorical                   | None                           |
+| **Tier**                 | Product tier (e.g., Low, Mid, High).                                      | String                          | Categorical                  | None         |
+| **Brand**                | Brand name of the product.                                                 | String                          | Categorical                   | Depends on Category            |
+| **Price (USD)**          | Price of the product in USD.                                               | Float                           | Categorical                        | Depends on Tier and Brand      |
+| **Inward Date**          | Date when the product was added to inventory.                              | Date                            | Uniform                       | None                           |
+| **Dispatch Date**        | Date when the product was dispatched to the customer.                      | Date                            | Uniform                       | Depends on Inward Date         |
+| **Core Specification**   | Details about the product's core specifications.                          | String                          | Categorical                   | Depends on Category, Tier and Inward Date           |
+| **RAM (MB)**                  | Amount of RAM in the product.                            | Integer                          | Categorical                   | Depends on Tier, Category and Inward Date   |
+| **Storage (MB)**         | Storage capacity of the product in gigabytes.                              | Integer                         | Uniform              | Depends on Tier, Category and Inward Date            |
+| **Battery (mAh)**        | Battery capacity of the product in milliampere-hours.                      | Integer                         | Uniform                        | Depends on Tier, Category and Inward Date            |
+| **Processor Specification** | Details about the processor used in the product.                        | String                          | Categorical                   | Depends on Category, Brand, Inward Date and Core Specification   |
+| **Screen Size**          | Size of the product's screen in inches.                                    | Float                           | Uniform                        | Depends on Category            |
+| **Operating System**     | Operating system installed on the product.                                 | String                          | Categorical                   | Depends on Category and Brand           |
+| **Customer Name**        | Name of the customer who purchased the product.                           | String                          | Uniform                       | Depends on Gender                           |
+| **Customer Age**         | Age of the customer.                                                       | Integer                         | Normal                        | None                           |
+| **Customer Region**      | Region where the customer resides.                                         | String                          | Categorical                   | None                           |
+| **Customer Location**    | Specific location of the customer.                                         | String                          | Categorical                       | Depends on Customer Region     |
+| **Customer Gender**      | Gender of the customer.                                                    | String                          | Categorical                   | None                           |
+| **Customer Email**       | Email address of the customer.                                             | String                          | Uniform                       | Depends on Customer Name                           |
+| **Quantity Sold**        | Number of units sold in the transaction.                                   | Integer                         | Categorical                       | None                           |
+| **Warranty Years**       | Warranty period provided for the product in years.                        | Integer                         | Categorical              | None            |
+| **Rating**               | Customer rating for the product (e.g., 1-5 stars).                        | Integer                         | Categorical                       | None                           |
+| **Channel**              | Sales channel used (e.g., Online, Store).                                | String                          | Uniform                   | None                           |
+| **Payment Method**       | Payment method used by the customer (e.g., Credit Card, PayPal).           | String                          | Categorical                   | None                           |
+| **Shipping Method**      | Shipping method used for delivery (e.g., Standard, Express).               | String                          | Categorical                   | None                           |
+| **Has 5G**               | Indicates if the product supports 5G connectivity (Yes/No).               | Boolean                         | Categorical                     | Depends on Inward Date            |
+| **Has Touchscreen**      | Indicates if the product has a touchscreen feature (Yes/No).               | Boolean                         | Categorical                     | Depends on Category and Inward Date           |
+| **Currency**             | Currency used for the transaction.                                         | String                          | Categorical                   | None     |
 
 ## Running the tests
 
@@ -89,11 +88,11 @@ Name                          Stmts   Miss  Cover
 -------------------------------------------------
 generator\__init__.py             0      0   100%
 generator\constants.py           19      0   100%
-generator\data_generator.py     189      0   100%
+generator\data_generator.py     190      0   100%
 test\__init__.py                  0      0   100%
-test\test_data_generator.py     171      0   100%
+test\test_data_generator.py     184      2    99%
 -------------------------------------------------
-TOTAL                           379      0   100%
+TOTAL                           393      2    99%
 ```
 
 ## Built With

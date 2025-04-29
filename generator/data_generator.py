@@ -9,7 +9,7 @@ fake = Faker()
 
 def generate_product_code():
     sale_id = ""
-    for _ in range(8):
+    for _ in range(12):
         dataset = np.random.choice([string.ascii_uppercase, string.digits])
         sale_id += np.random.choice(list(dataset))
     return sale_id
@@ -26,82 +26,83 @@ def generate_brand(category):
     return str(np.random.choice(constants.LAPTOP_BRANDS))
 
 def generate_price(category, tier):
+    tiers = ["Low", "Mid", "High"]
+    i = tiers.index(tier)
     if category == "Mobile":
-        if tier == "Low":
-            return np.random.randint(80, 200)
-        elif tier == "Mid":
-            return np.random.randint(200, 500)
-        return np.random.randint(600, 1500)
+        mobile_prices = [80, 200, 200, 500, 600, 1500]
+        values = mobile_prices[i * 2 : (i + 1) * 2]
+        return np.random.randint(values[0], values[1])
     else:
-        if tier == "Low":
-            return np.random.randint(200, 500)
-        elif tier == "Mid":
-            return np.random.randint(500, 1000)
-        return np.random.randint(1100, 3000)
+        laptop_prices = [200, 500, 500, 1000, 1100, 3000]
+        values = laptop_prices[i * 2 : (i + 1) * 2]
+        return np.random.randint(values[0], values[1])
 
 def generate_inward_date():
-    return fake.date_between(start_date='-365d', end_date='-10d')
+    return fake.date_between(start_date='-7300d', end_date='-10d')
 
 def generate_dispatch_date(inward_date):
     return inward_date + timedelta(days=random.randint(3, 30))
 
-def generate_core_specification(category, tier):
+def generate_core_specification(category, tier, date):
     if category == "Mobile":
         return "N/A"
-    if tier == "Low":
-        return str(np.random.choice(constants.CORE_SPECIFICATION[0:2]))
-    elif tier == "Mid":
-        return str(np.random.choice(constants.CORE_SPECIFICATION[2:4]))
-    return str(np.random.choice(constants.CORE_SPECIFICATION[4:]))
+    tiers = ["Low", "Mid", "High"]
+    index = tiers.index(tier)
+    years = sorted(constants.CORE_SPECIFICATION.keys())
+    year = date.year
+    key = max([a for a in years if a <= year])
+    return str(np.random.choice(constants.CORE_SPECIFICATION[key][index * 2 : (index + 1) * 2]))
 
-def generate_ram(category, tier):
+def generate_ram(category, tier, date):
+    tiers = ["Low", "Mid", "High"]
+    i = tiers.index(tier)
+    years = [2005, 2010, 2015, 2020, 2025]
+    year = date.year
+    yearIndex = max([a for a in range(len(years)) if years[a] <= year])
     if category == "Mobile":
-        if tier == "Low":
-            return int(np.random.choice(constants.MOBILE_RAM[0:2]))
-        return int(np.random.choice(constants.MOBILE_RAM[2:]))
+        choice = np.random.choice(constants.MOBILE_RAM[i * 2 : (i + 1) * 2])
+        return int(choice// (2 ** (5 - yearIndex - 1)))
     else:
-        if tier == "Low":
-            return int(np.random.choice(constants.PC_RAM[0:2]))
-        return int(np.random.choice(constants.PC_RAM[2:]))
+        choice = np.random.choice(constants.PC_RAM[i * 2 : (i + 1) * 2])
+        return int(choice // (2 ** (5 - yearIndex - 1)))
     
-def generate_storage(category, tier):
+def generate_storage(category, tier, date):
+    tiers = ["Low", "Mid", "High"]
+    i = tiers.index(tier)
+    years = [2005, 2010, 2015, 2020, 2025]
+    year = date.year
+    yearIndex = max([a for a in range(len(years)) if years[a] <= year])
     if category == "Mobile":
-        if tier == "Low":
-            return int(np.random.choice(constants.MOBILE_STORAGE[0:2]))
-        elif tier == "Mid":
-            return int(np.random.choice(constants.MOBILE_STORAGE[2:4]))
-        return int(np.random.choice(constants.MOBILE_STORAGE[4:]))
+        choice = np.random.choice(constants.MOBILE_STORAGE[i * 2 : (i + 1) * 2])
+        return int(choice // (2 ** (5 - yearIndex - 1)))
     else:
-        if tier == "Low":
-            return int(np.random.choice(constants.PC_STORAGE[0:2]))
-        elif tier == "Mid":
-            return int(np.random.choice(constants.PC_STORAGE[2:4]))
-        return int(np.random.choice(constants.PC_STORAGE[4:]))
+        choice = np.random.choice(constants.PC_STORAGE[i * 2 : (i + 1) * 2])
+        return int(choice // (2 ** (5 - yearIndex - 1)))
 
-def generate_battery(category, tier):
+def generate_battery(category, tier, date):
+    tiers = ["Low", "Mid", "High"]
+    i = tiers.index(tier)
+    years = [2005, 2010, 2015, 2020, 2025]
+    year = date.year
+    yearIndex = max([a for a in range(len(years)) if years[a] <= year])
     if category == "Mobile":
-        if tier == "Low":
-            return int(np.random.choice(constants.MOBILE_BATTERY[0:2]))
-        elif tier == "Mid":
-            return int(np.random.choice(constants.MOBILE_BATTERY[2:4]))
-        return int(np.random.choice(constants.MOBILE_BATTERY[4:]))
+        choice = np.random.choice(constants.MOBILE_BATTERY[i * 2 : (i + 1) * 2])
+        return int(choice// (2 ** (5 - yearIndex - 1)))
     else:
-        if tier == "Low":
-            return int(np.random.choice(constants.PC_BATTERY[0:2]))
-        elif tier == "Mid":
-            return int(np.random.choice(constants.PC_BATTERY[2:4]))
-        return int(np.random.choice(constants.PC_BATTERY[4:]))
+        choice = np.random.choice(constants.PC_BATTERY[i * 2 : (i + 1) * 2])
+        return int(choice // (2 ** (5 - yearIndex - 1)))
 
-def generate_processor_specification(category, brand, core_specification=""):
+def generate_processor_specification(category, brand, date, core_specification=""):
     if category == "Laptop":
         return core_specification
-    if brand == "Apple":
-        return "Apple A-Series"
-    elif brand == "Samsung":
-        return "Samsung Exynos"
-    elif brand == "Xiaomi" or brand == "OnePlus" or brand == "Realme":
-        return "Mediatek Dimensity"
-    return str(np.random.choice(constants.PROCESSOR_SPECIFICATION))
+    years = sorted(constants.PROCESSOR_SPECIFICATION.keys())
+    year = date.year
+    key = max([a for a in years if a <= year])
+    if brand in ["Xiaomi", "OnePlus", "Realme"]:
+        brand = "MediaTek"
+    elif brand not in ["Apple", "Samsung"]:
+        brand = "Others"
+    return str(np.random.choice(constants.PROCESSOR_SPECIFICATION[key][brand]))
 
 def generate_screen_size(category):
     if category == "Mobile":
@@ -181,20 +182,23 @@ def generate_shipping_method():
     probabilities = [0.50, 0.30, 0.10, 0.10]
     return str(np.random.choice(constants.SHIPPING_METHODS, p=probabilities))
 
-def generate_has_5g():
-    return bool(np.random.choice([True, False], p=[0.6, 0.4]))
+def generate_has_5g(date):
+    if date.year >= 2020:
+        return bool(np.random.choice([True, False], p=[0.6, 0.4]))
+    return False
 
-def generate_has_touchscreen(category):
-    if category == "Mobile":
-        return True
-    return bool(np.random.choice([True, False], p=[0.3, 0.7]))
+def generate_has_touchscreen(category, date):
+    if date.year >= 2007:
+        if category == "Mobile":
+            return True
+        return bool(np.random.choice([True, False], p=[0.3, 0.7]))
+    return False
 
 def generate_currency():
     return str(np.random.choice(constants.CURRENCIES, p=[0.85, 0.15]))
 
 def generate_data(n):
     data = []
-
     for i in range(n):
         print("Row: ", i + 1)
 
@@ -206,11 +210,11 @@ def generate_data(n):
         price = generate_price(category, tier)
         inward_date = generate_inward_date()
         dispatch_date = generate_dispatch_date(inward_date)
-        core_specification = generate_core_specification(category, tier) 
-        ram = generate_ram(category, tier) 
-        storage = generate_storage(category, tier) 
-        battery = generate_battery(category, tier) 
-        processor_specification = generate_processor_specification(category, brand, core_specification)
+        core_specification = generate_core_specification(category, tier, inward_date) 
+        ram = generate_ram(category, tier, inward_date) 
+        storage = generate_storage(category, tier, inward_date) 
+        battery = generate_battery(category, tier, inward_date) 
+        processor_specification = generate_processor_specification(category, brand, inward_date, core_specification)
         screen_size = generate_screen_size(category)
         operating_system = generate_operating_system(category, brand)
         customer_gender = generate_gender()
@@ -225,8 +229,8 @@ def generate_data(n):
         channel = generate_channel()
         payment_method = generate_payment_method()
         shipping_method = generate_shipping_method()
-        has_5g = generate_has_5g()
-        has_touchscreen = generate_has_touchscreen(category)
+        has_5g = generate_has_5g(inward_date)
+        has_touchscreen = generate_has_touchscreen(category, inward_date)
         currency = generate_currency()
 
         row = {
@@ -236,11 +240,11 @@ def generate_data(n):
             "Tier": tier,
             "Brand": brand,
             "Price (USD)": price,
-            "Inward Date": str(inward_date),
-            "Dispatch Date": str(dispatch_date),
+            "Inward Date": inward_date,
+            "Dispatch Date": dispatch_date,
             "Core Specification": core_specification,
-            "RAM": ram,
-            "Storage (GB)": storage,
+            "RAM (MB)": ram,
+            "Storage (MB)": storage,
             "Battery (mAh)": battery,
             "Processor Specification": processor_specification,
             "Screen Size": screen_size,
