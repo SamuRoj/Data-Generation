@@ -11,7 +11,9 @@ class DataGeneratorTest(unittest.TestCase):
     def test_generate_data(self):
         N = 500
         data = data_generator.generate_data(N)
-        self.assertTrue(N == len(data))
+        with open("data.csv", "r", encoding="utf-8") as file:
+            lines = file.readlines()
+            self.assertTrue(N == len(lines) - 1)
 
     def test_generator_product_code(self):
         N = 12
@@ -217,14 +219,16 @@ class DataGeneratorTest(unittest.TestCase):
         self.assertTrue(shipping_method in constants.SHIPPING_METHODS)
 
     def test_generator_has_5g(self):
-        has_5g = data_generator.generate_has_5g()
+        date = data_generator.generate_inward_date()
+        has_5g = data_generator.generate_has_5g(date)
         self.assertTrue(has_5g in [True, False])
 
     def test_generator_has_touchscreen(self):
-        has_touchscreen = data_generator.generate_has_touchscreen("Mobile")
+        date = data_generator.generate_inward_date()
+        has_touchscreen = data_generator.generate_has_touchscreen("Mobile", date)
         self.assertTrue(has_touchscreen)
 
-        has_touchscreen = data_generator.generate_has_touchscreen("Laptop")
+        has_touchscreen = data_generator.generate_has_touchscreen("Laptop", date)
         self.assertTrue(has_touchscreen in [True, False])
 
     def test_generator_currency(self):

@@ -4,6 +4,7 @@ from faker import Faker
 from datetime import timedelta
 from generator import constants
 import string
+import csv
 
 fake = Faker()
 
@@ -197,76 +198,86 @@ def generate_has_touchscreen(category, date):
 def generate_currency():
     return str(np.random.choice(constants.CURRENCIES, p=[0.85, 0.15]))
 
-def generate_data(n):
-    data = []
-    for i in range(n):
-        print("Row: ", i + 1)
+def generate_data(n, filename="data.csv"):
+    with open(filename, mode='w', newline='', encoding='utf-8') as file:
+        fieldnames = [
+            "Sale Id", "Product Code", "Category", "Tier", "Brand", "Price (USD)",
+            "Inward Date", "Dispatch Date", "Core Specification", "RAM (MB)", 
+            "Storage (MB)", "Battery (mAh)", "Processor Specification", "Screen Size", 
+            "Operating System", "Customer Name", "Customer Age", "Customer Region", 
+            "Customer Location", "Customer Gender", "Customer Email", "Quantity Sold", 
+            "Warranty Years", "Rating", "Channel", "Payment Method", 
+            "Shipping Method", "Has 5G", "Has Touchscreen", "Currency"
+        ]
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
 
-        sale_id = "S" + str(i + 1)
-        product_code = generate_product_code()
-        tier = generate_tier()
-        category = generate_category()
-        brand = generate_brand(category)
-        price = generate_price(category, tier)
-        inward_date = generate_inward_date()
-        dispatch_date = generate_dispatch_date(inward_date)
-        core_specification = generate_core_specification(category, tier, inward_date) 
-        ram = generate_ram(category, tier, inward_date) 
-        storage = generate_storage(category, tier, inward_date) 
-        battery = generate_battery(category, tier, inward_date) 
-        processor_specification = generate_processor_specification(category, brand, inward_date, core_specification)
-        screen_size = generate_screen_size(category)
-        operating_system = generate_operating_system(category, brand)
-        customer_gender = generate_gender()
-        customer_name = generate_name(customer_gender)
-        customer_age = generate_age()
-        customer_region = generate_region()
-        customer_location = generate_location(customer_region)
-        customer_email = generate_email(customer_name)
-        quantity_sold = generate_quantity_sold()
-        warranty_years = generate_warranty_years()
-        rating = generate_rating()
-        channel = generate_channel()
-        payment_method = generate_payment_method()
-        shipping_method = generate_shipping_method()
-        has_5g = generate_has_5g(inward_date)
-        has_touchscreen = generate_has_touchscreen(category, inward_date)
-        currency = generate_currency()
+        for i in range(n):
+            print("Row:", i + 1)
 
-        row = {
-            "Sale Id": sale_id,
-            "Product Code": product_code,
-            "Category": category,
-            "Tier": tier,
-            "Brand": brand,
-            "Price (USD)": price,
-            "Inward Date": inward_date,
-            "Dispatch Date": dispatch_date,
-            "Core Specification": core_specification,
-            "RAM (MB)": ram,
-            "Storage (MB)": storage,
-            "Battery (mAh)": battery,
-            "Processor Specification": processor_specification,
-            "Screen Size": screen_size,
-            "Operating System": operating_system,
-            "Customer Name": customer_name,
-            "Customer Age": customer_age,
-            "Customer Region": customer_region,
-            "Customer Location": customer_location,
-            "Customer Gender": customer_gender,
-            "Customer Email": customer_email,
-            "Quantity Sold": quantity_sold,
-            "Warranty Years": warranty_years,
-            "Rating": rating,
-            "Channel": channel,
-            "Payment Method": payment_method,
-            "Shipping Method": shipping_method,
-            "Has 5G": has_5g,
-            "Has Touchscreen": has_touchscreen,
-            "Currency": currency
-        }
+            sale_id = "S" + str(i + 1)
+            product_code = generate_product_code()
+            tier = generate_tier()
+            category = generate_category()
+            brand = generate_brand(category)
+            price = generate_price(category, tier)
+            inward_date = generate_inward_date()
+            dispatch_date = generate_dispatch_date(inward_date)
+            core_specification = generate_core_specification(category, tier, inward_date) 
+            ram = generate_ram(category, tier, inward_date) 
+            storage = generate_storage(category, tier, inward_date) 
+            battery = generate_battery(category, tier, inward_date) 
+            processor_specification = generate_processor_specification(category, brand, inward_date, core_specification)
+            screen_size = generate_screen_size(category)
+            operating_system = generate_operating_system(category, brand)
+            customer_gender = generate_gender()
+            customer_name = generate_name(customer_gender)
+            customer_age = generate_age()
+            customer_region = generate_region()
+            customer_location = generate_location(customer_region)
+            customer_email = generate_email(customer_name)
+            quantity_sold = generate_quantity_sold()
+            warranty_years = generate_warranty_years()
+            rating = generate_rating()
+            channel = generate_channel()
+            payment_method = generate_payment_method()
+            shipping_method = generate_shipping_method()
+            has_5g = generate_has_5g(inward_date)
+            has_touchscreen = generate_has_touchscreen(category, inward_date)
+            currency = generate_currency()
 
-        data.append(row)
+            row = {
+                "Sale Id": sale_id,
+                "Product Code": product_code,
+                "Category": category,
+                "Tier": tier,
+                "Brand": brand,
+                "Price (USD)": price,
+                "Inward Date": inward_date,
+                "Dispatch Date": dispatch_date,
+                "Core Specification": core_specification,
+                "RAM (MB)": ram,
+                "Storage (MB)": storage,
+                "Battery (mAh)": battery,
+                "Processor Specification": processor_specification,
+                "Screen Size": screen_size,
+                "Operating System": operating_system,
+                "Customer Name": customer_name,
+                "Customer Age": customer_age,
+                "Customer Region": customer_region,
+                "Customer Location": customer_location,
+                "Customer Gender": customer_gender,
+                "Customer Email": customer_email,
+                "Quantity Sold": quantity_sold,
+                "Warranty Years": warranty_years,
+                "Rating": rating,
+                "Channel": channel,
+                "Payment Method": payment_method,
+                "Shipping Method": shipping_method,
+                "Has 5G": has_5g,
+                "Has Touchscreen": has_touchscreen,
+                "Currency": currency
+            }
 
-    return data
+            writer.writerow(row)
             
